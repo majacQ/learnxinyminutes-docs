@@ -131,7 +131,7 @@ You'll want to be familiar with Clojure. Make sure you understand everything in
 
 ; However, we'll need to make it a macro if we want it to be run at compile time
 (defmacro inline-2 [form]
-  (inline-2-helper form)))
+  (inline-2-helper form))
 
 (macroexpand '(inline-2 (1 + (3 / 2) - (1 / 2) + 1)))
 ; -> (+ (- (+ 1 (/ 3 2)) (/ 1 2)) 1)
@@ -142,11 +142,8 @@ You'll want to be familiar with Clojure. Make sure you understand everything in
 
 ### Further Reading
 
-Writing Macros from [Clojure for the Brave and True](http://www.braveclojure.com/)
-[http://www.braveclojure.com/writing-macros/](http://www.braveclojure.com/writing-macros/)
+[Writing Macros](http://www.braveclojure.com/writing-macros/)
 
-Official docs
-[http://clojure.org/macros](http://clojure.org/macros)
+[Official docs](http://clojure.org/macros)
 
-When to use macros?
-[http://dunsmor.com/lisp/onlisp/onlisp_12.html](http://dunsmor.com/lisp/onlisp/onlisp_12.html)
+[When to use macros?](https://lispcast.com/when-to-use-a-macro/)

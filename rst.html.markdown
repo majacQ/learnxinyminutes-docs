@@ -6,9 +6,9 @@ contributors:
 filename: restructuredtext.rst
 ---
 
-RST is a file format formely created by Python community to write documentation (and so, is part of Docutils).
+RST, Restructured Text, is a file format created by the Python community to write documentation. It is part of [Docutils](https://docutils.sourceforge.io/rst.html).
 
-RST files are simple text files with lightweight syntax (comparing to HTML).
+RST is a markdown language like HTML but is much more lightweight and easier to read.
 
 
 ## Installation
@@ -39,30 +39,37 @@ A simple example of the file syntax:
 Main titles are written using equals signs over and under
 =========================================================
 
-Note that there must be as many equals signs as title characters.
+Note that each character, including spaces, needs an equals sign above and below.
 
-Title are underlined with equals signs too
-==========================================
+Titles also use equals signs but are only underneath
+====================================================
 
 Subtitles with dashes
 ---------------------
 
-And sub-subtitles with tildes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You can put text in *italic* or in **bold**, you can "mark" text as code with double backquote ``print()``.
 
-You can  put text in *italic* or in **bold**, you can "mark" text as code with double backquote ``: ``print()``.
+Special characters can be escaped using a backslash, e.g. \\ or \*.
 
-Lists are as simple as in Markdown:
+Lists are similar to Markdown, but a little more involved.
+
+Remember to line up list symbols (like - or \*) with the left edge of the previous text block, and remember to use blank lines to separate new lists from parent lists:    
 
 - First item
 - Second item
-    - Sub item
+
+  - Sub item
+    
+- Third item
 
 or
 
 * First item
 * Second item
-    * Sub item
+    
+  * Sub item
+
+* Third item
 
 Tables are really easy to write:
 
@@ -73,15 +80,15 @@ France      Paris
 Japan       Tokyo
 =========== ========
 
-More complex tabless can be done easily (merged columns and/or rows) but I suggest you to read the complete doc for this :)
+More complex tables can be done easily (merged columns and/or rows) but I suggest you to read the complete doc for this :)
 
 There are multiple ways to make links:
 
-- By adding an underscore after a word : Github_ and by adding the target URL after the text (this way has the advantage to not insert unnecessary URLs inside readable text).
+- By adding an underscore after a word : Github_ and by adding the target URL after the text (this way has the advantage of not inserting unnecessary URLs in the visible text).
 - By typing a full comprehensible URL : https://github.com/ (will be automatically converted to a link)
 - By making a more Markdown-like link: `Github <https://github.com/>`_ .
 
-.. _Github https://github.com/
+.. _Github: https://github.com/
 
 ```
 

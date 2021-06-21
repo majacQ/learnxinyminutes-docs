@@ -252,7 +252,7 @@ weirdSum(2, 4) // => 16
 // The return keyword exists in Scala, but it only returns from the inner-most
 // def that surrounds it.
 // WARNING: Using return in Scala is error-prone and should be avoided.
-// It has no effect on anonymous functions. For example:
+// It has no effect on anonymous functions. For example here you may expect foo(7) should return 17 but it returns 7:
 def foo(x: Int): Int = {
   val anonFunc: Int => Int = { z =>
     if (z > 5)
@@ -260,9 +260,10 @@ def foo(x: Int): Int = {
     else
       z + 2    // This line is the return value of anonFunc
   }
-  anonFunc(x)  // This line is the return value of foo
+  anonFunc(x) + 10  // This line is the return value of foo
 }
 
+foo(7) // => 7
 
 /////////////////////////////////////////////////
 // 3. Flow Control
@@ -276,6 +277,8 @@ r foreach println
 // NB: Scala is quite lenient when it comes to dots and brackets - study the
 // rules separately. This helps write DSLs and APIs that read like English
 
+// Why doesn't `println` need any parameters here?
+// Stay tuned for first-class functions in the Functional Programming section below!
 (5 to 1 by -1) foreach (println)
 
 // A while loop
@@ -299,7 +302,7 @@ do {
 // Recursion is the idiomatic way of repeating an action in Scala (as in most
 // other functional languages).
 // Recursive functions need an explicit return type, the compiler can't infer it.
-// Here it's Unit.
+// Here it's Unit, which is analagous to a `void` return type in Java
 def showNumbersInRange(a: Int, b: Int): Unit = {
   print(a)
   if (a < b)
@@ -343,7 +346,7 @@ s(0)      // Boolean = false
 s(1)      // Boolean = true
 
 /* Look up the documentation of map here -
- * http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.Map
+ * https://www.scala-lang.org/api/current/scala/collection/immutable/Map.html
  * and make sure you can read it
  */
 
@@ -412,8 +415,8 @@ class Dog(br: String) {
   private def sleep(hours: Int) =
     println(s"I'm sleeping for $hours hours")
 
-  // Abstract methods are simply methods with no body. If we uncomment the next
-  // line, class Dog would need to be declared abstract
+  // Abstract methods are simply methods with no body. If we uncomment the
+  // def line below, class Dog would need to be declared abstract like so:
   //   abstract class Dog(...) { ... }
   // def chaseAfter(what: String): String
 }
@@ -455,7 +458,7 @@ george.phoneNumber  // => "1234"
 Person("George", "1234") == Person("Kate", "1236")  // => false
 
 // Easy way to copy
-// otherGeorge == Person("george", "9876")
+// otherGeorge == Person("George", "9876")
 val otherGeorge = george.copy(phoneNumber = "9876")
 
 // And many others. Case classes also get pattern matching for free, see below.
@@ -523,7 +526,9 @@ def matchPerson(person: Person): String = person match {
   case Person(name, number)     => "We matched someone : " + name + ", phone : " + number
 }
 
-val email = "(.*)@(.*)".r  // Define a regex for the next example.
+// Regular expressions are also built in.
+// Create a regex with the `r` method on a string:
+val email = "(.*)@(.*)".r
 
 // Pattern matching might look familiar to the switch statements in the C family
 // of languages, but this is much more powerful. In Scala, you can match much
@@ -589,6 +594,8 @@ List("Dom", "Bob", "Natalia") foreach println
 
 
 // Combinators
+// Using `s` from above:
+// val s = Set(1, 3, 7)
 
 s.map(sq)
 
@@ -608,8 +615,8 @@ List(
 ).filter(_.age > 25) // List(Person("Bob", 30))
 
 
-// Scala a foreach method defined on certain collections that takes a type
-// returning Unit (a void method)
+// Certain collections (such as List) in Scala have a `foreach` method,
+// which takes as an argument a type returning Unit - that is, a void method
 val aListOfNumbers = List(1, 2, 3, 4, 10, 20, 100)
 aListOfNumbers foreach (x => println(x))
 aListOfNumbers foreach println
@@ -710,7 +717,7 @@ import scala.collection.immutable.{Map => _, Set => _, _}
 // Java classes can also be imported. Scala syntax can be used
 import java.swing.{JFrame, JWindow}
 
-// Your programs entry point is defined in an scala file using an object, with a
+// Your programs entry point is defined in a scala file using an object, with a
 // single method, main:
 object Application {
   def main(args: Array[String]): Unit = {

@@ -2,11 +2,11 @@
 language: chapel
 filename: learnchapel.chpl
 contributors:
-    - ["Ian J. Bertolacci", "http://www.cs.colostate.edu/~ibertola/"]
-    - ["Ben Harshbarger", "http://github.com/benharsh/"]
+    - ["Ian J. Bertolacci", "https://www.cs.arizona.edu/~ianbertolacci/"]
+    - ["Ben Harshbarger", "https://github.com/benharsh/"]
 ---
 
-You can read all about Chapel at [Cray's official Chapel website](http://chapel.cray.com).
+You can read all about Chapel at [Cray's official Chapel website](https://chapel-lang.org).
 In short, Chapel is an open-source, high-productivity, parallel-programming
 language in development at Cray Inc., and is designed to run on multi-core PCs
 as well as multi-kilocore supercomputers.
@@ -100,7 +100,7 @@ writeln(varCmdLineArg, ", ", constCmdLineArg, ", ", paramCmdLineArg);
 // be made to alias a variable other than the variable it is initialized with.
 // Here, refToActual refers to actual.
 var actual = 10;
-ref refToActual = actual; 
+ref refToActual = actual;
 writeln(actual, " == ", refToActual); // prints the same value
 actual = -123; // modify actual (which refToActual refers to)
 writeln(actual, " == ", refToActual); // prints the same value
@@ -188,7 +188,7 @@ if 10 < 100 then
 if -1 < 1 then
   writeln("Continuing to believe reality");
 else
-  writeln("Send mathematician, something's wrong");
+  writeln("Send mathematician, something is wrong");
 
 // You can use parentheses if you prefer.
 if (10 > 100) {
@@ -213,7 +213,7 @@ if a % 3 == 0 {
 var maximum = if thisInt < thatInt then thatInt else thisInt;
 
 // select statements are much like switch statements in other languages.
-// However, select statements don't cascade like in C or Java.
+// However, select statements do not cascade like in C or Java.
 var inputOption = "anOption";
 select inputOption {
   when "anOption" do writeln("Chose 'anOption'");
@@ -223,7 +223,7 @@ select inputOption {
   }
   otherwise {
     writeln("Any other Input");
-    writeln("the otherwise case doesn't need a do if the body is one line");
+    writeln("the otherwise case does not need a do if the body is one line");
   }
 }
 
@@ -282,7 +282,7 @@ var range2to10by2: range(stridable=true) = 2..10 by 2; // 2, 4, 6, 8, 10
 var reverse2to10by2 = 2..10 by -2; // 10, 8, 6, 4, 2
 
 var trapRange = 10..1 by -1; // Do not be fooled, this is still an empty range
-writeln("Size of range '", trapRange, "' = ", trapRange.length);
+writeln("Size of range ", trapRange, " = ", trapRange.length);
 
 // Note: range(boundedType= ...) and range(stridable= ...) are only
 // necessary if we explicitly type the variable.
@@ -425,7 +425,7 @@ var thisPlusThat = thisArray + thatArray;
 writeln(thisPlusThat);
 
 // Moving on, arrays and loops can also be expressions, where the loop
-// body's expression is the result of each iteration.
+// body expression is the result of each iteration.
 var arrayFromLoop = for i in 1..10 do i;
 writeln(arrayFromLoop);
 
@@ -444,7 +444,7 @@ arrayFromLoop = [value in arrayFromLoop] value + 1;
 
 // Procedures
 
-// Chapel procedures have similar syntax functions in other languages. 
+// Chapel procedures have similar syntax functions in other languages.
 proc fibonacci(n : int) : int {
   if n <= 1 then return n;
   return fibonacci(n-1) + fibonacci(n-2);
@@ -708,7 +708,7 @@ class MyClass {
 // We also get the compiler-generated initializer, with one argument per field.
 // Note that soon there will be no compiler-generated initializer when we
 // define any initializer(s) explicitly.
-  proc MyClass(val : real) {
+  proc init(val : real) {
     this.memberInt = ceil(val): int;
   }
 
@@ -893,7 +893,6 @@ foo();
 // We can declare a main procedure, but all the code above main still gets
 // executed.
 proc main() {
-  writeln("PARALLELISM START");
 
 // A begin statement will spin the body of that statement off
 // into one new task.
@@ -1124,16 +1123,16 @@ This tutorial is for people who want to learn the ropes of chapel without
 having to hear about what fiber mixture the ropes are, or how they were
 braided, or how the braid configurations differ between one another. It won't
 teach you how to develop amazingly performant code, and it's not exhaustive.
-Refer to the [language specification](http://chapel.cray.com/language.html) and
-the [module documentation](http://chapel.cray.com/docs/latest/) for more
+Refer to the [language specification](https://chapel-lang.org/docs/latest/language/spec.html) and
+the [module documentation](https://chapel-lang.org/docs/latest/) for more
 details.
 
-Occasionally check back here and on the [Chapel site](http://chapel.cray.com)
+Occasionally check back here and on the [Chapel site](https://chapel-lang.org)
 to see if more topics have been added or more tutorials created.
 
 ### What this tutorial is lacking:
 
- * Exposition of the [standard modules](http://chapel.cray.com/docs/latest/modules/modules.html)
+ * Exposition of the [standard modules](https://chapel-lang.org/docs/latest/modules/standard.html)
  * Multiple Locales (distributed memory system)
  * Records
  * Parallel iterators
@@ -1141,11 +1140,13 @@ to see if more topics have been added or more tutorials created.
 Your input, questions, and discoveries are important to the developers!
 -----------------------------------------------------------------------
 
-The Chapel language is still in-development (version 1.15.0), so there are
+The Chapel language is still in active development, so there are
 occasional hiccups with performance and language features. The more information
 you give the Chapel development team about issues you encounter or features you
-would like to see, the better the language becomes. Feel free to email the team
-and other developers through the [sourceforge email lists](https://sourceforge.net/p/chapel/mailman).
+would like to see, the better the language becomes.
+There are several ways to interact with the developers:
++ [Gitter chat](https://gitter.im/chapel-lang/chapel)
++ [sourceforge email lists](https://sourceforge.net/p/chapel/mailman)
 
 If you're really interested in the development of the compiler or contributing
 to the project, [check out the master GitHub repository](https://github.com/chapel-lang/chapel).
@@ -1154,12 +1155,14 @@ It is under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0)
 Installing the Compiler
 -----------------------
 
+[The Official Chapel documentation details how to download and compile the Chapel compiler.](https://chapel-lang.org/docs/usingchapel/QUICKSTART.html)
+
 Chapel can be built and installed on your average 'nix machine (and cygwin).
 [Download the latest release version](https://github.com/chapel-lang/chapel/releases/)
 and it's as easy as
 
- 1. `tar -xvf chapel-1.15.0.tar.gz`
- 2. `cd chapel-1.15.0`
+ 1. `tar -xvf chapel-<VERSION>.tar.gz`
+ 2. `cd chapel-<VERSION>`
  3. `source util/setchplenv.bash # or .sh or .csh or .fish`
  4. `make`
  5. `make check # optional`
@@ -1168,7 +1171,7 @@ You will need to `source util/setchplenv.EXT` from within the Chapel directory
 (`$CHPL_HOME`) every time your terminal starts so it's suggested that you drop
 that command in a script that will get executed on startup (like .bashrc).
 
-Chapel is easily installed with Brew for OS X
+Chapel is easily installed with Brew for macOS
 
  1. `brew update`
  2. `brew install chapel`

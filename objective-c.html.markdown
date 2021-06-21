@@ -9,7 +9,7 @@ contributors:
 filename: LearnObjectiveC.m
 ---
 
-Objective-C is the main programming language used by Apple for the OS X and iOS operating systems and their respective frameworks, Cocoa and Cocoa Touch.
+Objective-C is the main programming language used by Apple for the macOS and iOS operating systems and their respective frameworks, Cocoa and Cocoa Touch.
 It is a general-purpose, object-oriented programming language that adds Smalltalk-style messaging to the C programming language.
 
 ```objective-c
@@ -731,7 +731,10 @@ if ([myClass conformsToProtocol:@protocol(CarUtilities)]) {
 ///////////////////////////////////////
 // Blocks are statements of code, just like a function, that are able to be used as data.
 // Below is a simple block with an integer argument that returns the argument plus 4.
-int (^addUp)(int n); // Declare a variable to store the block.
+^(int n) {
+    return n + 4;
+}
+int (^addUp)(int n); // Declare a variable to store a block.
 void (^noParameterBlockVar)(void); // Example variable declaration of block with no arguments.
 // Blocks have access to variables in the same scope. But the variables are readonly and the
 // value passed to the block is the value of the variable when the block is created.

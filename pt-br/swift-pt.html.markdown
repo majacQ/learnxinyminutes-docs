@@ -10,7 +10,7 @@ lang: pt-br
 
 ---
 
-Swift é uma linguagem de programação para desenvolvimento de aplicações no iOS e OS X criada pela Apple. Criada para
+Swift é uma linguagem de programação para desenvolvimento de aplicações no iOS e macOS criada pela Apple. Criada para
 coexistir com Objective-C e para ser mais resiliente a código com erros, Swift foi apresentada em 2014 na Apple's
 developer conference WWDC. Foi construída com o compilador LLVM já incluído no Xcode 6 beta.
 
@@ -389,13 +389,13 @@ if mySquare === mySquare {
 // Podem conter métodos do mesmo jeito que classes.
 
 enum Suit {
-    case Spades, Hearts, Diamonds, Clubs
+    case spades, hearts, diamonds, clubs
     func getIcon() -> String {
         switch self {
-        case .Spades: return "♤"
-        case .Hearts: return "♡"
-        case .Diamonds: return "♢"
-        case .Clubs: return "♧"
+        case .spades: return "♤"
+        case .hearts: return "♡"
+        case .diamonds: return "♢"
+        case .clubs: return "♧"
         }
     }
 }

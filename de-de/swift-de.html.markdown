@@ -11,7 +11,7 @@ filename: learnswift-de.swift
 lang: de-de
 ---
 
-Swift ist eine Programmiersprache von Apple für die Entwicklung von iOS und OS X Applikationen. Swift wurde 2014 zu Apples WWDC Entwicklerkonferenz vorgestellt und wurde mit dem Ziel entwickelt, fehlerträchtigen Code zu vermeiden sowie mit Objective-C zu koexistieren. Es wird mit dem LLVM Compiler gebaut und ist ab Xcode 6+ verfügbar.
+Swift ist eine Programmiersprache von Apple für die Entwicklung von iOS und macOS Applikationen. Swift wurde 2014 zu Apples WWDC Entwicklerkonferenz vorgestellt und wurde mit dem Ziel entwickelt, fehlerträchtigen Code zu vermeiden sowie mit Objective-C zu koexistieren. Es wird mit dem LLVM Compiler gebaut und ist ab Xcode 6+ verfügbar.
 
 Das offizielle [Swift Programming Language](https://itunes.apple.com/us/book/swift-programming-language/id881256329) Buch von Apple ist kostenlos via iBooks verfügbar.
 
@@ -440,13 +440,13 @@ if let circle = myEmptyCircle {
 // Wie Klassen auch können sie Methoden haben
 
 enum Suit {
-    case Spades, Hearts, Diamonds, Clubs
+    case spades, hearts, diamonds, clubs
     func getIcon() -> String {
         switch self {
-        case .Spades: return "♤"
-        case .Hearts: return "♡"
-        case .Diamonds: return "♢"
-        case .Clubs: return "♧"
+        case .spades: return "♤"
+        case .hearts: return "♡"
+        case .diamonds: return "♢"
+        case .clubs: return "♧"
         }
     }
 }
@@ -455,35 +455,35 @@ enum Suit {
 // Enum-Werte können vereinfacht geschrieben werden, es muss nicht der Enum-Typ
 // genannt werden, wenn die Variable explizit deklariert wurde
 
-var suitValue: Suit = .Hearts
+var suitValue: Suit = .hearts
 
 // Nicht-Integer-Enums brauchen direkt zugewiesene "Rohwerte"
 enum BookName: String {
-    case John = "John"
-    case Luke = "Luke"
+    case john = "John"
+    case luke = "Luke"
 }
-print("Name: \(BookName.John.rawValue)")
+print("Name: \(BookName.john.rawValue)")
 
 // Enum mit assoziierten Werten
 enum Furniture {
     // mit Int assoziiert
-    case Desk(height: Int)
+    case desk(height: Int)
     // mit String und Int assoziiert
-    case Chair(String, Int)
-    
+    case chair(String, Int)
+
     func description() -> String {
         switch self {
-        case .Desk(let height):
+        case .desk(let height):
             return "Desk with \(height) cm"
-        case .Chair(let brand, let height):
+        case .chair(let brand, let height):
             return "Chair of \(brand) with \(height) cm"
         }
     }
 }
 
-var desk: Furniture = .Desk(height: 80)
+var desk: Furniture = .desk(height: 80)
 print(desk.description())     // "Desk with 80 cm"
-var chair = Furniture.Chair("Foo", 40)
+var chair = Furniture.chair("Foo", 40)
 print(chair.description())    // "Chair of Foo with 40 cm"
 
 

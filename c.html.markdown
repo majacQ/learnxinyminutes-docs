@@ -8,6 +8,9 @@ contributors:
     - ["Marco Scannadinari", "https://marcoms.github.io"]
     - ["Zachary Ferguson", "https://github.io/zfergus2"]
     - ["himanshu", "https://github.com/himanshu81494"]
+    - ["Joshua Li", "https://github.com/JoshuaRLi"]
+    - ["Dragos B. Chirila", "https://github.com/dchirila"]
+    - ["Heitor P. de Bittencourt", "https://github.com/heitorPB/"]
 ---
 
 Ah, C. Still **the** language of modern high-performance computing.
@@ -17,13 +20,14 @@ it more than makes up for it with raw speed. Just be aware of its manual
 memory management and C will take you as far as you need to go.
 
 > **About compiler flags**
-> 
-> By default, gcc and clang are pretty quiet about compilation warnings and
-> errors, which can be very useful information. Using some
-> stricter compiler flags is recommended. Here is an example you can
-> tweak to your liking:
 >
-> `-Wall -Wextra -Werror -O0 -ansi -pedantic -std=c11`
+> By default, gcc and clang are pretty quiet about compilation warnings and
+> errors, which can be very useful information. Explicitly using stricter
+> compiler flags is recommended. Here are some recommended defaults:
+>
+> `-Wall -Wextra -Werror -O2 -std=c99 -pedantic`
+>
+> For information on what these flags do as well as other flags, consult the man page for your C compiler (e.g. `man 1 gcc`) or just search online.
 
 ```c
 // Single-line comments start with // - only available in C99 and later.
@@ -85,8 +89,12 @@ int main (int argc, char** argv)
   // Types
   ///////////////////////////////////////
 
-  // All variables MUST be declared at the top of the current block scope
-  // we declare them dynamically along the code for the sake of the tutorial
+  // Compilers that are not C99-compliant require that variables MUST be
+  // declared at the top of the current block scope.
+  // Compilers that ARE C99-compliant allow declarations near the point where
+  // the value is used.
+  // For the sake of the tutorial, variables are declared dynamically under
+  // C99-compliant standards.
 
   // ints are usually 4 bytes
   int x_int = 0;
@@ -99,7 +107,7 @@ int main (int argc, char** argv)
   char y_char = 'y'; // Char literals are quoted with ''
 
   // longs are often 4 to 8 bytes; long longs are guaranteed to be at least
-  // 64 bits
+  // 8 bytes
   long x_long = 0;
   long long x_long_long = 0;
 
@@ -139,6 +147,17 @@ int main (int argc, char** argv)
 
   // You can initialize an array to 0 thusly:
   char my_array[20] = {0};
+  // where the "{0}" part is called an "array initializer".
+  // NOTE that you get away without explicitly declaring the size of the array,
+  // IF you initialize the array on the same line. So, the following declaration
+  // is equivalent:
+  char my_array[] = {0};
+  // BUT, then you have to evaluate the size of the array at run-time, like this:
+  size_t my_array_size = sizeof(my_array) / sizeof(my_array[0]);
+  // WARNING If you adopt this approach, you should evaluate the size *before*
+  // you begin passing the array to function (see later discussion), because
+  // arrays get "downgraded" to raw pointers when they are passed to functions
+  // (so the statement above will produce the wrong result inside the function).
 
   // Indexing an array is like other languages -- or,
   // rather, other languages are like C
@@ -205,10 +224,18 @@ int main (int argc, char** argv)
   (float)i1 / i2; // => 0.5f
   i1 / (double)i2; // => 0.5 // Same with double
   f1 / f2; // => 0.5, plus or minus epsilon
+  
   // Floating-point numbers and calculations are not exact
+  // for instance it is not giving mathematically correct results
+  (0.1 + 0.1 + 0.1) != 0.3; // => 1 (true)
+  // and it is NOT associative
+  1 + (1e123 - 1e123) != (1 + 1e123) - 1e123; // => 1 (true)
+  // this notation is scientific notations for numbers: 1e123 = 1*10^123
 
-  // Modulo is there as well
-  11 % 3; // => 2
+  // Modulo is there as well, but be careful if arguments are negative
+  11 % 3;    // => 2 as 11 = 2 + 3*x (x=3)
+  (-11) % 3; // => -2, as one would expect
+  11 % (-3); // => 2 and not -2, and it's quite counter intuitive
 
   // Comparison operators are probably familiar, but
   // there is no Boolean type in C. We use ints instead.
@@ -217,12 +244,12 @@ int main (int argc, char** argv)
   // operators always yield 0 or 1.)
   3 == 2; // => 0 (false)
   3 != 2; // => 1 (true)
-  3 > 2; // => 1
-  3 < 2; // => 0
+  3 > 2;  // => 1
+  3 < 2;  // => 0
   2 <= 2; // => 1
   2 >= 2; // => 1
 
-  // C is not Python - comparisons don't chain.
+  // C is not Python - comparisons do NOT chain.
   // Warning: The line below will compile, but it means `(0 < a) < 2`.
   // This expression is always true, because (0 < a) could be either 1 or 0.
   // In this case it's 1, because (0 < 1).
@@ -330,25 +357,30 @@ int main (int argc, char** argv)
     break;
   }
   /*
-  using "goto" in C
+    Using "goto" in C
   */
   typedef enum { false, true } bool;
   // for C don't have bool as data type before C99 :(
   bool disaster = false;
   int i, j;
-  for(i=0;i<100;++i)
-  for(j=0;j<100;++j)
+  for(i=0; i<100; ++i)
+  for(j=0; j<100; ++j)
   {
     if((i + j) >= 150)
         disaster = true;
     if(disaster)
-        goto error;
+        goto error;  // exit both for loops
   }
-  error :
+  error: // this is a label that you can "jump" to with "goto error;"
   printf("Error occurred at i = %d & j = %d.\n", i, j);
   /*
-  https://ideone.com/GuPhd6
-  this will print out "Error occurred at i = 52 & j = 99."
+    https://ideone.com/GuPhd6
+    this will print out "Error occurred at i = 51 & j = 99."
+  */
+  /*
+    it is generally considered bad practice to do so, except if
+    you really know what you are doing. See 
+    https://en.wikipedia.org/wiki/Spaghetti_code#Meaning
   */
 
   ///////////////////////////////////////
@@ -372,8 +404,8 @@ int main (int argc, char** argv)
   // respectively, use the CHAR_MAX, SCHAR_MAX and UCHAR_MAX macros from <limits.h>
 
   // Integral types can be cast to floating-point types, and vice-versa.
-  printf("%f\n", (float)100); // %f formats a float
-  printf("%lf\n", (double)100); // %lf formats a double
+  printf("%f\n", (double) 100); // %f always formats a double...
+  printf("%f\n", (float)  100); // ...even with a float.
   printf("%d\n", (char)100.0);
 
   ///////////////////////////////////////
@@ -431,7 +463,7 @@ int main (int argc, char** argv)
   // or when it's the argument of the `sizeof` or `alignof` operator:
   int arraythethird[10];
   int *ptr = arraythethird; // equivalent with int *ptr = &arr[0];
-  printf("%zu, %zu\n", sizeof arraythethird, sizeof ptr);
+  printf("%zu, %zu\n", sizeof(arraythethird), sizeof(ptr));
   // probably prints "40, 4" or "40, 8"
 
   // Pointers are incremented and decremented based on their type
@@ -447,7 +479,7 @@ int main (int argc, char** argv)
   for (xx = 0; xx < 20; xx++) {
     *(my_ptr + xx) = 20 - xx; // my_ptr[xx] = 20-xx
   } // Initialize memory to 20, 19, 18, 17... 2, 1 (as ints)
-  
+
   // Be careful passing user-provided values to malloc! If you want
   // to be safe, you can use calloc instead (which, unlike malloc, also zeros out the memory)
   int* my_other_ptr = calloc(20, sizeof(int));
@@ -520,9 +552,11 @@ Example: in-place string reversal
 void str_reverse(char *str_in)
 {
   char tmp;
-  int ii = 0;
+  size_t ii = 0;
   size_t len = strlen(str_in); // `strlen()` is part of the c standard library
-  for (ii = 0; ii < len / 2; ii++) {
+                               // NOTE: length returned by `strlen` DOESN'T include the
+                               //       terminating NULL byte ('\0')
+  for (ii = 0; ii < len / 2; ii++) { // in C99 you can directly declare type of `ii` here
     tmp = str_in[ii];
     str_in[ii] = str_in[len - ii - 1]; // ii-th char from end
     str_in[len - ii - 1] = tmp;
@@ -587,6 +621,14 @@ static int j = 0; //other files using testFunc2() cannot access variable j
 void testFunc2() {
   extern int j;
 }
+// The static keyword makes a variable inaccessible to code outside the
+// compilation unit. (On almost all systems, a "compilation unit" is a .c
+// file.) static can apply both to global (to the compilation unit) variables,
+// functions, and function-local variables. When using static with
+// function-local variables, the variable is effectively global and retains its
+// value across function calls, but is only accessible within the function it
+// is declared in. Additionally, static variables are initialized to 0 if not
+// declared with some other starting value.
 //**You may also declare functions as static to make them private**
 
 ///////////////////////////////////////
@@ -701,7 +743,8 @@ typedef void (*my_fnp_type)(char *);
 "%3.2f"; // minimum 3 digits left and 2 digits right decimal float
 "%7.4s"; // (can do with strings too)
 "%c";    // char
-"%p";    // pointer
+"%p";    // pointer. NOTE: need to (void *)-cast the pointer, before passing
+         //                it as an argument to `printf`.
 "%x";    // hexadecimal
 "%o";    // octal
 "%%";    // prints %
@@ -711,11 +754,12 @@ typedef void (*my_fnp_type)(char *);
 // Order of Evaluation
 ///////////////////////////////////////
 
+// From top to bottom, top has higher precedence
 //---------------------------------------------------//
 //        Operators                  | Associativity //
 //---------------------------------------------------//
 // () [] -> .                        | left to right //
-// ! ~ ++ -- + = *(type)sizeof       | right to left //
+// ! ~ ++ -- + = *(type) sizeof      | right to left //
 // * / %                             | left to right //
 // + -                               | left to right //
 // << >>                             | left to right //
@@ -753,8 +797,8 @@ as the C file.
 /* included into files that include this header.                       */
 #include <string.h>
 
-/* Like c source files macros can be defined in headers and used in files */
-/* that include this header file.                                         */
+/* Like for c source files, macros can be defined in headers */
+/* and used in files that include this header file.          */
 #define EXAMPLE_NAME "Dennis Ritchie"
 
 /* Function macros can also be defined.  */
@@ -793,7 +837,7 @@ Best to find yourself a copy of [K&R, aka "The C Programming Language"](https://
 It is *the* book about C, written by Dennis Ritchie, the creator of C, and Brian Kernighan. Be careful, though - it's ancient and it contains some
 inaccuracies (well, ideas that are not considered good anymore) or now-changed practices.
 
-Another good resource is [Learn C The Hard Way](http://c.learncodethehardway.org/book/).
+Another good resource is [Learn C The Hard Way](http://learncodethehardway.org/c/) (not free).
 
 If you have a question, read the [compl.lang.c Frequently Asked Questions](http://c-faq.com).
 
@@ -803,4 +847,4 @@ Readable code is better than clever code and fast code. For a good, sane coding 
 
 Other than that, Google is your friend.
 
-[1] [Why isn't sizeof for a struct equal to the sum of sizeof of each member?](http://stackoverflow.com/questions/119123/why-isnt-sizeof-for-a-struct-equal-to-the-sum-of-sizeof-of-each-member)
+[1] [Why isn't sizeof for a struct equal to the sum of sizeof of each member?](https://stackoverflow.com/questions/119123/why-isnt-sizeof-for-a-struct-equal-to-the-sum-of-sizeof-of-each-member)

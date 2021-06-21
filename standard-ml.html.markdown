@@ -2,10 +2,11 @@
 language: "Standard ML"
 filename: standardml.sml
 contributors:
-    - ["Simon Shine", "http://shine.eu.org/"]
-    - ["David Pedersen", "http://lonelyproton.com/"]
+    - ["Simon Shine", "https://simonshine.dk/"]
+    - ["David Pedersen", "https://github.com/davidpdrsn"]
     - ["James Baker", "http://www.jbaker.io/"]
     - ["Leo Zovic", "http://langnostic.inaimathi.ca/"]
+    - ["Chris Wilson", "http://sencjw.com/"]
 ---
 
 Standard ML is a functional programming language with type inference and some
@@ -266,6 +267,19 @@ fun second_elem (x::y::xs) = y
 fun evenly_positioned_elems (odd::even::xs) = even::evenly_positioned_elems xs
   | evenly_positioned_elems [odd] = []  (* Base case: throw away *)
   | evenly_positioned_elems []    = []  (* Base case *)
+  
+(* The case expression can also be used to pattern match and return a value *)
+datatype temp =
+      C of real
+    | F of real
+    
+(*  Declaring a new C temp value...
+    val t: temp = C 45.0  *)
+
+fun temp_to_f t =
+    case t of
+      C x => x * (9.0 / 5.0) + 32.0
+    | F x => x
 
 (* When matching on records, you must use their slot names, and you must bind
    every slot in a record. The order of the slots doesn't matter though. *)
@@ -465,3 +479,4 @@ fun decrement_ret x y = (x := !x - 1; y)
 * Follow the Coursera course [Programming Languages](https://www.coursera.org/course/proglang).
 * Read *[ML for the Working Programmer](https://www.cl.cam.ac.uk/~lp15/MLbook/pub-details.html)* by Larry C. Paulson.
 * Use [StackOverflow's sml tag](http://stackoverflow.com/questions/tagged/sml).
+* Solve exercises on [Exercism.io's Standard ML track](https://exercism.io/tracks/sml).

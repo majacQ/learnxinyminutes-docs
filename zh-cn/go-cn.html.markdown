@@ -40,7 +40,7 @@ import (
 func main() {
     // 往标准输出打印一行。
     // 用包名fmt限制打印函数。
-    fmt.Println("天坑欢迎你!")
+    fmt.Println("你好世界")
 
     // 调用当前包的另一个函数。
     beyondHello()
@@ -142,6 +142,7 @@ func learnTypes() {
 func learnNamedReturns(x, y int) (z int) {
     z = x * y
     return // z is implicit here, because we named it earlier.
+}
 
 // Go全面支持垃圾回收。Go有指针，但是不支持指针运算。
 // 你会因为空指针而犯错，但是不会因为增加指针而犯错。

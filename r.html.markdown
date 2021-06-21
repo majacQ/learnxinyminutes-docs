@@ -255,16 +255,16 @@ c('Z', 'o', 'r', 'r', 'o') == "Z" # TRUE FALSE FALSE FALSE FALSE
 
 # FACTORS
 # The factor class is for categorical data
-# Factors can be ordered (like childrens' grade levels) or unordered (like gender)
-factor(c("female", "female", "male", NA, "female"))
-#  female female male   <NA>   female
-# Levels: female male
+# Factors can be ordered (like childrens' grade levels) or unordered (like colors)
+factor(c("blue", "blue", "green", NA, "blue"))
+#  blue blue green   <NA>   blue
+# Levels: blue green
 # The "levels" are the values the categorical data can take
 # Note that missing data does not enter the levels
-levels(factor(c("male", "male", "female", NA, "female"))) # "female" "male"
+levels(factor(c("green", "green", "blue", NA, "blue"))) # "blue" "green"
 # If a factor vector has length 1, its levels will have length 1, too
-length(factor("male")) # 1
-length(levels(factor("male"))) # 1
+length(factor("green")) # 1
+length(levels(factor("green"))) # 1
 # Factors are commonly seen in data frames, a data structure we will cover later
 data(infert) # "Infertility after Spontaneous and Induced Abortion"
 levels(infert$education) # "0-5yrs"  "6-11yrs" "12+ yrs"
@@ -663,7 +663,8 @@ require(plyr)
 
 # "pets.csv" is a file on the internet
 # (but it could just as easily be a file on your own computer)
-pets <- read.csv("http://learnxinyminutes.com/docs/pets.csv")
+require(RCurl)
+pets <- read.csv(textConnection(getURL("https://learnxinyminutes.com/docs/pets.csv")))
 pets
 head(pets, 2) # first two rows
 tail(pets, 1) # last row
@@ -788,7 +789,7 @@ install.packages("ggplot2")
 require(ggplot2)
 ?ggplot2
 pp <- ggplot(students, aes(x=house))
-pp + geom_histogram()
+pp + geom_bar()
 ll <- as.data.table(list1)
 pp <- ggplot(ll, aes(x=time,price))
 pp + geom_point()

@@ -25,17 +25,19 @@ true.class #=> Bool
 
 1.class #=> Int32
 
-# Four signed integer types
-1_i8.class  #=> Int8
-1_i16.class #=> Int16
-1_i32.class #=> Int32
-1_i64.class #=> Int64
+# Five signed integer types
+1_i8.class   #=> Int8
+1_i16.class  #=> Int16
+1_i32.class  #=> Int32
+1_i64.class  #=> Int64
+1_i128.class #=> Int128
 
-# Four unsigned integer types
-1_u8.class  #=> UInt8
-1_u16.class #=> UInt16
-1_u32.class #=> UInt32
-1_u64.class #=> UInt64
+# Five unsigned integer types
+1_u8.class   #=> UInt8
+1_u16.class  #=> UInt16
+1_u32.class  #=> UInt32
+1_u64.class  #=> UInt64
+1_u128.class #=> UInt128
 
 2147483648.class          #=> Int64
 9223372036854775808.class #=> UInt64
@@ -227,7 +229,7 @@ b #=> 'b'
 c #=> "c"
 
 # Procs represent a function pointer with an optional context (the closure data)
-# It is typically created with a proc litteral
+# It is typically created with a proc literal
 proc = ->(x : Int32) { x.to_s }
 proc.class # Proc(Int32, String)
 # Or using the new method
@@ -301,7 +303,6 @@ end
 (1..3).each do |index|
   puts "Index: #{index}"
 end
-# Index: 0
 # Index: 1
 # Index: 2
 # Index: 3
@@ -422,7 +423,7 @@ class Human
     @name
   end
 
-  # The above functionality can be encapsulated using the attr_accessor method as follows
+  # The above functionality can be encapsulated using the propery method as follows
   property :name
 
   # Getter/setter methods can also be created individually like this
@@ -550,4 +551,4 @@ ex #=> "ex2"
 
 ## Additional resources
 
-- [Official Documentation](http://crystal-lang.org/)
+- [Official Documentation](https://crystal-lang.org/)
