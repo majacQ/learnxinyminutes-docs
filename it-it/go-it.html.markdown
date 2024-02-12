@@ -34,7 +34,7 @@ Go include un'ottima libreria standard e ha una community entusiasta.
  su riga multipla */
 
 // In cima ad ogni file è necessario specificare il package.
-// Main è un package speciale che identifica un eseguibile anziché una libreria.
+// main è un package speciale che identifica un eseguibile anziché una libreria.
 package main
 
 // Con import sono dichiarate tutte le librerie a cui si fa riferimento 
@@ -91,7 +91,7 @@ può includere andata a capo.` // Sempre di tipo stringa.
     // Stringa letterale non ASCII. I sorgenti Go sono in UTF-8.
 	g := 'Σ' // Il tipo runa, alias per int32, è costituito da un code point unicode.
 
-	f := 3.14195 // float64, un numero in virgola mobile a 64-bit (IEEE-754)
+	f := 3.14159 // float64, un numero in virgola mobile a 64-bit (IEEE-754)
 
 	c := 3 + 4i  // complex128, rappresentato internamente con due float64.
 

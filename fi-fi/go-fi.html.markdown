@@ -33,7 +33,7 @@ Go tuo mukanaan loistavan oletuskirjaston sekä innokkaan yhteisön.
  rivin kommentti */
 
 // Package -lausekkeella aloitetaan jokainen lähdekooditiedosto.
-// Main on erityinen nimi joka ilmoittaa
+// main on erityinen nimi joka ilmoittaa
 // suoritettavan tiedoston kirjaston sijasta.
 package main
 
@@ -90,7 +90,7 @@ voi sisältää rivinvaihtoja.` // Sama merkkijonotyyppi.
     // Ei-ASCII todellisarvo. Go-lähdekoodi on UTF-8.
 	g := 'Σ' // riimutyyppi, lempinimi int32:lle, sisältää unicode-koodipisteen.
 
-	f := 3.14195 //float64, IEEE-754 64-bittinen liukuluku.
+	f := 3.14159 //float64, IEEE-754 64-bittinen liukuluku.
 	c := 3 + 4i  // complex128, sisäisesti ilmaistu kahdella float64:lla.
 
 	// var -syntaksi alkuarvoilla.

@@ -32,7 +32,7 @@ communauté active.
  multiligne */
 
 // Un paquet débute avec une clause "package"
-// "Main" est un nom spécial déclarant un paquet de type exécutable plutôt
+// "main" est un nom spécial déclarant un paquet de type exécutable plutôt
 // qu'une bibliothèque
 package main
 
@@ -87,7 +87,7 @@ sauts de ligne.` // Chaîne de caractère.
   g := 'Σ' // type rune, un alias pour le type int32, contenant un caractère
            // unicode.
 
-  f := 3.14195 // float64, un nombre flottant IEEE-754 de 64-bit.
+  f := 3.14159 // float64, un nombre flottant IEEE-754 de 64-bit.
   c := 3 + 4i  // complex128, considéré comme deux float64 par le compilateur.
 
   // Syntaxe "var" avec une valeur d'initialisation.
